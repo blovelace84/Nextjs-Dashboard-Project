@@ -5,6 +5,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Login",
+  keywords: ["login", "authentication"],
+  robots: "noindex",
 };
 
 export default function LoginPage() {

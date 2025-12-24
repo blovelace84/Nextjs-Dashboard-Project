@@ -7,6 +7,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "This is my Dashboard side Navigation",
+  keywords: ["dashboard", "sidenav"],
+  robots: "noindex",
 };
 
 export default function SideNav() {

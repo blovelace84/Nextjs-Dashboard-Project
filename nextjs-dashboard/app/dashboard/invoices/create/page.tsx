@@ -5,6 +5,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Create Invoice",
+  keywords: ["dashboard", "invoices", "create"],
+  robots: "noindex",
 };
 
 export default async function Page() {
