@@ -11,10 +11,12 @@ import { Button } from "./button";
 import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const signupSuccess = searchParams.get("signup") === "success";
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
@@ -25,6 +27,13 @@ export default function LoginForm() {
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
+          {signupSuccess && (
+            <div className="mb-4 rounded-md bg-green-50 p-3">
+              <p className="text-sm text-green-600">
+                Account created successfully! Please log in.
+              </p>
+            </div>
+          )}
         </h1>
         <div className="w-full">
           <div>
@@ -77,6 +86,12 @@ export default function LoginForm() {
           aria-atomic="true"
         >
           {/* Add form errors here */}
+          <div className="mt-4 text-center text-sm">
+            Don&apos;t have an account?{" "}
+            <Link href="/signup" className="text-blue-500 hover:underline">
+              Sign up
+            </Link>
+          </div>
           {errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />

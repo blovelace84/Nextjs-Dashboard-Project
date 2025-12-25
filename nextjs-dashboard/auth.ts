@@ -11,6 +11,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 async function getUser(email: string): Promise<User | undefined> {
   try {
     const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
+    console.log('User lookup for', email, ':', user.length > 0 ? 'found' : 'not found');
     return user[0];
   } catch (error) {
     console.error('Failed to fetch user:', error);
@@ -30,8 +31,12 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
           const user = await getUser(email);
-          if (!user) return null;
+          if (!user) {
+            console.log("User not found for email:", email);
+            return null;
+          }
           const passwordsMatch = await bcrypt.compare(password, user.password);
+          console.log("Password match result:", passwordsMatch);
 
           if(passwordsMatch) return user;
         }
